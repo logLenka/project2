@@ -81,20 +81,23 @@ function fetchMovies(theatreId) {
                 const movies = xmlDoc.getElementsByTagName("Title");
                 const start = xmlDoc.getElementsByTagName("dttmShowStart");
                 const images = xmlDoc.getElementsByTagName("EventSmallImagePortrait");
+                const urls = xmlDoc.getElementsByTagName("EventURL");
                 let movieTitles = [];
                 let startTimes = [];
                 let movieImages = [];
+                let movieURLs = [];
 
                 // loops through constants to populate respective arrays
                 for (let i = 0; i < movies.length; i++) {
                     movieTitles.push(movies[i].textContent);
                     startTimes.push(start[i].textContent);
                     movieImages.push(images[i].textContent);
+                    movieURLs.push(urls[i].textContent);
                 }
 
                 // displayMovies(movieTitles);
                 // calls function to diplay movies info in table
-                displayMovies_inTable(movieTitles, startTimes, movieImages)
+                displayMovies_inTable(movieTitles, startTimes, movieImages, movieURLs)
             })
             
 }   
@@ -119,12 +122,12 @@ function fetchMovies(theatreId) {
 //     });
 // }
 
-function displayMovies_inTable(titles, sTimes, mImages) {
+function displayMovies_inTable(titles, sTimes, mImages, mURLs) {
     const movieList = document.getElementById('movieList');
     movieList.innerHTML = ''; // Clear previous movie info
 
     // create table header
-    let table = '<table border="1"><tr><th>Title</th><th>Start</th><th>Poster</th></tr>';
+    let table = '<table border="1"><tr><th>Title</th><th>Start</th><th>Link</th><th>Poster</th></tr>';
 				  
     // loop through & populate table with movies info
 
@@ -133,6 +136,8 @@ function displayMovies_inTable(titles, sTimes, mImages) {
         table += `<tr>
                     <td>${titles[i]}</td>
                     <td>${sTimes[i]}</td>
+                    <td><a href=${mURLs[i]} target="_blank">Click to learn more.</a></td>
+                    
                     <td><img src="${mImages[i]}" style="width:100px;"></td>
                     </tr>`;
         };
