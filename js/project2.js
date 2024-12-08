@@ -1,7 +1,7 @@
 let theatreNames = [];
 let theatreIds = [];
 
-// fetch & parse theatre areas (names & IDs) xml data & save them in respective arrays
+// fetch & parse theatre areas (names & IDs) xml data from URL & save them in respective arrays
 // call function fillTheatreDropdown with theatre Names & IDs
 fetch('https://www.finnkino.fi/xml/TheatreAreas/')
     .then(response => {
@@ -46,7 +46,7 @@ function fillTheatreDropdown(names, ids) {
     });
 }
 
-// triggers fetchMovies function on change event
+// triggers fetchMovies function on change event in theatre dropdown
 const theatreDropdown = document.getElementById('theatreDropdown');
 theatreDropdown.addEventListener('change', (event) => {
     const selectedTheatreId = event.target.value;
@@ -73,6 +73,7 @@ function fetchMovies(theatreId) {
                 }
                 return response.text();
             })
+            //  parse & assign data ...
             .then(data => {
                 const parser = new DOMParser();
                 const xmlDoc = parser.parseFromString(data, "text/xml");
@@ -97,7 +98,7 @@ function fetchMovies(theatreId) {
             })
             
 }   
-    // if theatre ID not valid, clear the table & input message
+    // if theatre ID not valid, clear the table & display message
     else{
         // console.log(theatreIds.includes(theatreId));
         document.getElementById('movieList').innerHTML = ''
